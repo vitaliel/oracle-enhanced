@@ -55,6 +55,7 @@ module ActiveRecord
         end
 
         def views # :nodoc:
+          return [] # not needed
           select_values(<<-SQL.strip.gsub(/\s+/, " "), "views")
             SELECT LOWER(view_name) FROM all_views WHERE owner = SYS_CONTEXT('userenv', 'current_schema')
           SQL
@@ -68,6 +69,8 @@ module ActiveRecord
 
         # get synonyms for schema dump
         def synonyms
+          return [] # not needed
+
           result = select_all(<<-SQL.strip.gsub(/\s+/, " "), "synonyms")
           SELECT synonym_name, table_owner, table_name, db_link
           FROM all_synonyms where owner = SYS_CONTEXT('userenv', 'session_user')
